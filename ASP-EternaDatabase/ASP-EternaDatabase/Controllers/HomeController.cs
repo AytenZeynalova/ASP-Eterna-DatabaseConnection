@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ASP_EternaDatabase.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace ASP_EternaDatabase.Controllers
     {
         public IActionResult Index()
         {
+
             return View();
         }
     }

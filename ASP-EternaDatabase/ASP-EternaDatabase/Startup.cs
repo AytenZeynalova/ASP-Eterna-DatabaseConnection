@@ -1,6 +1,8 @@
+using ASP_EternaDatabase.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -16,6 +18,12 @@ namespace ASP_EternaDatabase
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
+
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(@"Server=DESKTOP-Q400V6O;Database=Eterna;Trusted_Connection=TRUE");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -27,13 +35,17 @@ namespace ASP_EternaDatabase
             }
 
             app.UseRouting();
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+
+                endpoints.MapControllerRoute(
+                    "default",
+                    "{controller=home}/{action=index}/{id?}"
+
+
+                    );
             });
         }
     }
